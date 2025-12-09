@@ -56,6 +56,17 @@ describe(Laboratory.name, () => {
             // Assert
             expect(() => new Laboratory(reactions, 'fake-substance-1')).toThrow("Laboratory need valid reactions.");
         });
+
+        it('should throw if reaction has substance not exist in laboratory', () => {
+            // Arrange
+            const substance = "fake-substance-1";
+            const reactions: ReactionsMap = {
+                fake: [{quantity: 1, substance: 'fake'}]
+            }
+
+            // Assert
+            expect(() => new Laboratory(reactions, substance)).toThrow("Laboratory need reactions with valid substance.");
+        });
     })
 
     describe('getQuantity', () => {
