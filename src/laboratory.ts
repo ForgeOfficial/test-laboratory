@@ -13,6 +13,7 @@ export class Laboratory {
 
         Object.keys(reactions).forEach((reactionName) => {
             const reaction = reactions[reactionName];
+            if (this.substances.has(reactionName)) throw new Error('Laboratory not accept reaction with same name has substances.');
             reaction.forEach(element => {
                 if (
                     typeof element.quantity !== 'number' || element.quantity <= 0 ||
