@@ -17,7 +17,7 @@ describe(Laboratory.name, () => {
 
     it('should throw if create laboratory with duplicate substances', () => {
         // Assert
-        expect(() => new Laboratory()).toThrow("Laboratory not accept duplicate substances.");
+        expect(() => new Laboratory("fake", "fake")).toThrow("Laboratory not accept duplicate substances.");
     });
 
     describe('getQuantity', () => {
