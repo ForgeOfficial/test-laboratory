@@ -46,7 +46,7 @@ describe(Laboratory.name, () => {
             laboratory = new Laboratory("fake-substance-1", "fake-substance-2");
         });
 
-        it.each([1, 4])('should add quantity to substance', (quantity) => {
+        it.each([1, 4, 2.3])('should add quantity to substance', (quantity) => {
             // Arrange
             const substance = 'fake-substance-1';
 
@@ -62,7 +62,7 @@ describe(Laboratory.name, () => {
             const substance = 'fake-substance-1';
 
             // Assert
-            expect(() => laboratory.add(substance, quantity as any)).toThrow('Quantity must be integer and upper than 0');
+            expect(() => laboratory.add(substance, quantity as any)).toThrow('Quantity must be a number and upper than 0');
         });
 
         it.each([1, null, undefined, 0, -1, false, {}])('should throw if substance is invalid', (substance) => {
