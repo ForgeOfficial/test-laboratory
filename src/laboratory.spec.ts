@@ -15,6 +15,11 @@ describe(Laboratory.name, () => {
         expect(() => new Laboratory()).toThrow("Laboratory need substances.");
     });
 
+    it('should throw if create laboratory with duplicate substances', () => {
+        // Assert
+        expect(() => new Laboratory()).toThrow("Laboratory not accept duplicate substances.");
+    });
+
     describe('getQuantity', () => {
         let laboratory: Laboratory;
         beforeEach(() => {
