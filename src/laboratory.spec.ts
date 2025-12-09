@@ -197,6 +197,26 @@ describe(Laboratory.name, () => {
             expect(laboratory.getQuantity(substance)).toEqual(0);
         });
 
+        it('should make a product with a big desired quantity', () => {
+            // Arrange
+            const substances = ['fake-substance-1', 'fake-substance-2'];
+            const reactions: ReactionsMap = {
+                fake: [{quantity: 1, substance: substances[0] }, {quantity: 2, substance: substances[1]}],
+            }
+            const laboratory = new Laboratory(reactions, ...substances);
+            laboratory.add(substances[0], 8);
+            laboratory.add(substances[1], 4);
+
+            // Act
+            const result = laboratory.make('fake', 20);
+
+            // Assert
+            expect(result).toEqual(2);
+            expect(laboratory.getQuantity('fake')).toEqual(2);
+            expect(laboratory.getQuantity(substances[0])).toEqual(6);
+            expect(laboratory.getQuantity(substances[1])).toEqual(0);
+        });
+
         it('should throw if product not exist', () => {
             // Arrange
             const substance = 'fake-substance-1';
