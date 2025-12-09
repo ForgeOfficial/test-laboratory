@@ -83,9 +83,9 @@ describe(Laboratory.name, () => {
             expect(result).toEqual(0);
         });
 
-        it('should throw if substance not exist', () => {
+        it('should throw if element not exist', () => {
             // Assert
-            expect(() => laboratory.getQuantity('error-substance')).toThrow('Substance not found.');
+            expect(() => laboratory.getQuantity('error-element')).toThrow('Element not found.');
         });
     });
 
@@ -114,21 +114,21 @@ describe(Laboratory.name, () => {
             expect(() => laboratory.add(substance, quantity as any)).toThrow('Quantity must be a number and upper than 0');
         });
 
-        it.each([1, null, undefined, 0, -1, false, {}])('should throw if substance is invalid', (substance) => {
+        it.each([1, null, undefined, 0, -1, false, {}])('should throw if element is invalid', (substance) => {
             // Arrange
             const quantity = 1;
 
             // Assert
-            expect(() => laboratory.add(substance as any, quantity)).toThrow('Substance must be a string.');
+            expect(() => laboratory.add(substance as any, quantity)).toThrow('Element must be a string.');
         });
 
-        it('should throw if substance not exist', () => {
+        it('should throw if element not exist', () => {
             // Arrange
             const substance = 'fake-1';
             const quantity = 1;
 
             // Assert
-            expect(() => laboratory.add(substance, quantity)).toThrow('Substance not found.');
+            expect(() => laboratory.add(substance, quantity)).toThrow('Element not found.');
         });
 
         it('should add quantity to product', () => {
