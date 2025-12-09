@@ -176,5 +176,25 @@ describe(Laboratory.name, () => {
             // Assert
             expect(laboratory.getQuantity(product)).toEqual(quantity);
         });
+    });
+
+    describe('make', () => {
+        it('should make a product', () => {
+            // Arrange
+            const substance = 'fake-substance-1';
+            const reactions: ReactionsMap = {
+                fake: [{quantity: 2, substance }],
+            }
+            const laboratory = new Laboratory(reactions, substance);
+            laboratory.add(substance, 2);
+
+            // Act
+            const result = laboratory.make('fake', 1);
+
+            // Assert
+            expect(result).toEqual(1);
+            expect(laboratory.getQuantity('fake')).toEqual(1);
+            expect(laboratory.getQuantity(substance)).toEqual(0);
+        });
     })
 })
