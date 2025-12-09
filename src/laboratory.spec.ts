@@ -90,7 +90,7 @@ describe(Laboratory.name, () => {
             expect(result).toBeInstanceOf(Laboratory);
         });
 
-        it.each([1, false, 'fake', undefined, null, []])('should not throw if reactions is invalid', (reactions: any) => {
+        it.each([1, false, 'fake', undefined, null, []])('should throw if reactions is invalid', (reactions: any) => {
             // Arrange
             const substance = "fake-substance-1";
 
