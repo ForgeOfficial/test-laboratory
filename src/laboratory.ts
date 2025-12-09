@@ -12,6 +12,7 @@ export class Laboratory {
     }
 
     add(substance: string, quantity: number): void {
+        if (typeof substance !== 'string') throw new Error('Substance must be a string.');
         if (quantity <= 0 || !Number.isInteger(quantity)) throw new Error('Quantity must be integer and upper than 0');
         this.substances.set(substance, this.getQuantity(substance)+quantity);
     }
