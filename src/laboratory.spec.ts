@@ -61,7 +61,7 @@ describe(Laboratory.name, () => {
             // Arrange
             const substance = "fake-substance-1";
             const reactions: ReactionsMap = {
-                fake: [{quantity: 1, substance: 'fake'}]
+                fake: [{quantity: 1, substance: 'fake-substance-2'}]
             }
 
             // Assert
@@ -195,6 +195,24 @@ describe(Laboratory.name, () => {
             expect(result).toEqual(1);
             expect(laboratory.getQuantity('fake')).toEqual(1);
             expect(laboratory.getQuantity(substance)).toEqual(0);
+        });
+
+        it('should make a product with product', () => {
+            // Arrange
+            const reactions: ReactionsMap = {
+                fake: [{quantity: 2, substance: "fake-substance-1" }],
+                "fake-2": [{quantity: 1, substance: 'fake' }],
+            }
+            const laboratory = new Laboratory(reactions, "fake-substance-1");
+            laboratory.add("fake", 2);
+
+            // Act
+            const result = laboratory.make('fake-2', 1);
+
+            // Assert
+            expect(result).toEqual(1);
+            expect(laboratory.getQuantity('fake-2')).toEqual(1);
+            expect(laboratory.getQuantity("fake")).toEqual(1);
         });
 
         it('should make a product with a big desired quantity', () => {
