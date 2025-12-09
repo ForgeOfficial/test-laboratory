@@ -251,6 +251,21 @@ describe(Laboratory.name, () => {
             expect(result).toEqual(0);
         });
 
+        it('should return 0 if quantity reaction is 0', () => {
+            // Arrange
+            const substance = 'fake-substance-1';
+            const reactions: ReactionsMap = {
+                fake: [{quantity: 2, substance }],
+            }
+            const laboratory = new Laboratory(reactions, substance);
+
+            // Act
+            const result = laboratory.make('fake', 1);
+
+            // Assert
+            expect(result).toEqual(0);
+        });
+
         it('should throw if product not exist', () => {
             // Arrange
             const substance = 'fake-substance-1';
