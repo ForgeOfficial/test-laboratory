@@ -1,10 +1,27 @@
-import {Laboratory} from "./laboratory";
+import {Laboratory, ReactionsMap} from "./laboratory";
 
 describe(Laboratory.name, () => {
 
     it('should create laboratory with substances', () => {
         // Act
-        const laboratory = new Laboratory("fake-substance-1", "fake-substance-2");
+        const laboratory = new Laboratory({}, "fake-substance-1", "fake-substance-2");
+
+        // Assert
+        expect(laboratory).toBeInstanceOf(Laboratory);
+    });
+
+    it('should create laboratory with substances and reactions', () => {
+        // Arrange
+        const substances = ["fake-substance-1", "fake-substance-2"];
+        const reactions: ReactionsMap = {
+            fake: [
+                {quantity: 1, substance: substances[0] },
+                {quantity: 2, substance: substances[1] },
+            ]
+        };
+
+        // Act
+        const laboratory = new Laboratory(reactions, ...substances);
 
         // Assert
         expect(laboratory).toBeInstanceOf(Laboratory);
@@ -12,18 +29,18 @@ describe(Laboratory.name, () => {
 
     it('should throw if create laboratory without substances', () => {
         // Assert
-        expect(() => new Laboratory()).toThrow("Laboratory need substances.");
+        expect(() => new Laboratory({})).toThrow("Laboratory need substances.");
     });
 
     it('should throw if create laboratory with duplicate substances', () => {
         // Assert
-        expect(() => new Laboratory("fake", "fake")).toThrow("Laboratory not accept duplicate substances.");
+        expect(() => new Laboratory({}, "fake", "fake")).toThrow("Laboratory not accept duplicate substances.");
     });
 
     describe('getQuantity', () => {
         let laboratory: Laboratory;
         beforeEach(() => {
-            laboratory = new Laboratory("fake-substance-1", "fake-substance-2");
+            laboratory = new Laboratory({}, "fake-substance-1", "fake-substance-2");
         });
 
         it('should return quantity of substance', () => {
@@ -43,7 +60,7 @@ describe(Laboratory.name, () => {
     describe('add', () => {
         let laboratory: Laboratory;
         beforeEach(() => {
-            laboratory = new Laboratory("fake-substance-1", "fake-substance-2");
+            laboratory = new Laboratory({}, "fake-substance-1", "fake-substance-2");
         });
 
         it.each([1, 4, 2.3])('should add quantity to substance', (quantity) => {

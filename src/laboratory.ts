@@ -1,6 +1,11 @@
+export type Reaction = { quantity: number; substance: string };
+export type ReactionsMap = Record<string, Reaction[]>;
+
 export class Laboratory {
     private readonly substances: Map<string, number> = new Map();
-    constructor(...substances: string[]) {
+    private readonly reactions: ReactionsMap;
+
+    constructor(reactions: ReactionsMap, ...substances: string[]) {
         if (substances.length === 0) throw new Error('Laboratory need substances.');
         if (substances.length !== new Set(substances).size) throw new Error('Laboratory not accept duplicate substances.')
         substances.forEach((substance) => this.substances.set(substance, 0));
