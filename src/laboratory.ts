@@ -9,6 +9,16 @@ export class Laboratory {
         if (substances.length === 0) throw new Error('Laboratory need substances.');
         if (substances.length !== new Set(substances).size) throw new Error('Laboratory not accept duplicate substances.')
         substances.forEach((substance) => this.substances.set(substance, 0));
+
+        Object.keys(reactions).forEach((reactionName) => {
+            const reaction = reactions[reactionName];
+            reaction.forEach(element => {
+                if (
+                    typeof element.quantity !== 'number' || element.quantity <= 0 ||
+                    typeof element.substance !== 'string'
+                ) throw new Error('Laboratory need valid reactions.')
+            })
+        })
     }
 
     getQuantity(substance: string): number {
