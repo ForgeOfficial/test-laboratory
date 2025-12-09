@@ -1,6 +1,6 @@
 export class Laboratory {
-    private readonly substances: string[];
+    private readonly substances: Map<string, number> = new Map();
     constructor(...substances: string[]) {
-        this.substances = substances;
+        substances.forEach((substance) => this.substances.set(substance, 0));
     }
 }
