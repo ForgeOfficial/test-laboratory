@@ -208,5 +208,17 @@ describe(Laboratory.name, () => {
             // Assert
             expect(() => laboratory.make('fake-2', 1)).toThrow('The product not exist.');
         });
+
+        it.each(["1", -1, 0, false, {}, null, undefined])('should throw if desiredQuantity is invalid', (desiredQuantity: any) => {
+            // Arrange
+            const substance = 'fake-substance-1';
+            const reactions: ReactionsMap = {
+                fake: [{quantity: 2, substance }],
+            }
+            const laboratory = new Laboratory(reactions, substance);
+
+            // Assert
+            expect(() => laboratory.make('fake', desiredQuantity)).toThrow('The desired quantity is invalid.');
+        });
     })
 })
