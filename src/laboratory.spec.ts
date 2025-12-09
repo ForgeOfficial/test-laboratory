@@ -58,7 +58,7 @@ describe(Laboratory.name, () => {
             expect(laboratory.getQuantity(substance)).toEqual(quantity);
         });
 
-        it.each(['1', null, undefined, 0, -1])('should throw if quantity is invalid', (quantity) => {
+        it.each(['1', null, undefined, 0, -1, false, {}])('should throw if quantity is invalid', (quantity) => {
             // Arrange
             const substance = 'fake-substance-1';
 
