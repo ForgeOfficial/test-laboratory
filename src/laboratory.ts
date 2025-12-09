@@ -47,6 +47,8 @@ export class Laboratory {
 
     make(product: string, desiredQuantity: number): number {
         const reactions = this.reactions[product];
+        if (!reactions) throw new Error('The product not exist.');
+
         reactions.forEach((reaction) => {
             const quantity = this.getQuantity(reaction.substance);
             if (this.products.has(reaction.substance))
