@@ -11,18 +11,19 @@ export class Laboratory {
         if (substances.length !== new Set(substances).size) throw new Error('Laboratory not accept duplicate substances.')
         substances.forEach((substance) => this.substances.set(substance, 0));
 
-        Object.keys(reactions).forEach((reactionName) => {
-            const reaction = reactions[reactionName];
-            if (this.substances.has(reactionName)) throw new Error('Laboratory not accept reaction with same name has substances.');
-            reaction.forEach(element => {
-                if (
-                    typeof element.quantity !== 'number' || element.quantity <= 0 ||
-                    typeof element.substance !== 'string'
-                ) throw new Error('Laboratory need valid reactions.');
-                if (!this.substances.has(element.substance)) throw new Error('Laboratory need reactions with valid substance.');
-            });
-            this.products.set(reactionName, 0);
-        })
+        if (reactions)
+            Object.keys(reactions).forEach((reactionName) => {
+                const reaction = reactions[reactionName];
+                if (this.substances.has(reactionName)) throw new Error('Laboratory not accept reaction with same name has substances.');
+                reaction.forEach(element => {
+                    if (
+                        typeof element.quantity !== 'number' || element.quantity <= 0 ||
+                        typeof element.substance !== 'string'
+                    ) throw new Error('Laboratory need valid reactions.');
+                    if (!this.substances.has(element.substance)) throw new Error('Laboratory need reactions with valid substance.');
+                });
+                this.products.set(reactionName, 0);
+            })
     }
 
     getQuantity(element: string): number {
