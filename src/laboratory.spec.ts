@@ -217,6 +217,22 @@ describe(Laboratory.name, () => {
             expect(laboratory.getQuantity(substances[1])).toEqual(0);
         });
 
+        it('should return 0 if max craftable is 0', () => {
+            // Arrange
+            const substance = 'fake-substance-1';
+            const reactions: ReactionsMap = {
+                fake: [{quantity: 2, substance }],
+            }
+            const laboratory = new Laboratory(reactions, substance);
+            laboratory.add(substance, 1);
+
+            // Act
+            const result = laboratory.make('fake', 1);
+
+            // Assert
+            expect(result).toEqual(0);
+        });
+
         it('should throw if product not exist', () => {
             // Arrange
             const substance = 'fake-substance-1';
