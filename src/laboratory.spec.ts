@@ -65,5 +65,13 @@ describe(Laboratory.name, () => {
             // Assert
             expect(() => laboratory.add(substance, quantity as any)).toThrow('Quantity must be integer and upper than 0');
         });
+
+        it.each([1, null, undefined, 0, -1, false, {}])('should throw if substance is invalid', (substance) => {
+            // Arrange
+            const quantity = 1;
+
+            // Assert
+            expect(() => laboratory.add(substance as any, quantity)).toThrow('Substance must be a string.');
+        });
     })
 })
