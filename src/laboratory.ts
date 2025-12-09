@@ -48,6 +48,7 @@ export class Laboratory {
     make(product: string, desiredQuantity: number): number {
         const reactions = this.reactions[product];
         if (!reactions) throw new Error('The product not exist.');
+        if (typeof desiredQuantity !== 'number' || desiredQuantity <= 0) throw new Error('The desired quantity is invalid.')
 
         reactions.forEach((reaction) => {
             const quantity = this.getQuantity(reaction.substance);
