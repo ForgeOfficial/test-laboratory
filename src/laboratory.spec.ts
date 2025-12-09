@@ -10,6 +10,11 @@ describe(Laboratory.name, () => {
         expect(laboratory).toBeInstanceOf(Laboratory);
     });
 
+    it('should throw if create laboratory without substances', () => {
+        // Assert
+        expect(() => new Laboratory()).toThrow("Laboratory need substances.");
+    });
+
     describe('getQuantity', () => {
         let laboratory: Laboratory;
         beforeEach(() => {
