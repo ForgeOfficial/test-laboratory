@@ -11,5 +11,7 @@ export class Laboratory {
         return this.substances.get(substance);
     }
 
-    add(substance: string, quantity: number): void {}
+    add(substance: string, quantity: number): void {
+        this.substances.set(substance, this.substances.get(substance)+quantity);
+    }
 }
