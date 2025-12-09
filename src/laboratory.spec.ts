@@ -43,6 +43,7 @@ describe(Laboratory.name, () => {
             {quantity: 1, substance: null },
             {quantity: 1, substance: 1 },
 
+            {quantity: 0, substance: 'fake-substance-1' },
             {quantity: -1, substance: 'fake-substance-1' },
             {quantity: "1", substance: 'fake-substance-1' },
             {quantity: false, substance: 'fake-substance-1' },
