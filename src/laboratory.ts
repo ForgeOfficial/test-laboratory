@@ -5,6 +5,6 @@ export class Laboratory {
     }
 
     getQuantity(substance: string): number {
-        throw new Error('not implemented.');
+        return this.substances.get(substance);
     }
 }
