@@ -21,7 +21,9 @@ export class Laboratory {
                     !Number.isFinite(element.quantity) || element.quantity <= 0 ||
                     typeof element.substance !== 'string'
                 ) throw new Error('Laboratory need valid reactions.');
-                if (!this.substances.has(element.substance)) throw new Error('Laboratory need reactions with valid substance.');
+                if (
+                    !this.substances.has(element.substance) && !Object.keys(reactions).includes(element.substance)
+                ) throw new Error('Laboratory need reactions with valid substance.');
             });
             this.products.set(reactionName, 0);
         });
