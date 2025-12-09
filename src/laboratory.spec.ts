@@ -79,7 +79,7 @@ describe(Laboratory.name, () => {
             expect(() => new Laboratory(reactions, substance)).toThrow("Laboratory not accept reaction with same name has substances.");
         });
 
-        it.each([null, {}, undefined])('should not throw if reactions is empty or null', (reactions: any) => {
+        it.each([{}])('should not throw if reactions is empty', (reactions: any) => {
             // Arrange
             const substance = "fake-substance-1";
 
@@ -88,6 +88,14 @@ describe(Laboratory.name, () => {
 
             // Assert
             expect(result).toBeInstanceOf(Laboratory);
+        });
+
+        it.each([1, false, 'fake', undefined, null, []])('should not throw if reactions is invalid', (reactions: any) => {
+            // Arrange
+            const substance = "fake-substance-1";
+
+            // Assert
+            expect(() => new Laboratory(reactions, substance)).toThrow("The type of reactions is invalid.");
         });
     })
 
