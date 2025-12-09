@@ -73,5 +73,14 @@ describe(Laboratory.name, () => {
             // Assert
             expect(() => laboratory.add(substance as any, quantity)).toThrow('Substance must be a string.');
         });
+
+        it('should throw if substance not exist', () => {
+            // Arrange
+            const substance = 'fake-1';
+            const quantity = 1;
+
+            // Assert
+            expect(() => laboratory.add(substance, quantity)).toThrow('The substance must be exist in this laboratory.');
+        });
     })
 })
