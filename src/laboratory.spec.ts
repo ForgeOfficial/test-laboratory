@@ -9,4 +9,17 @@ describe(Laboratory.name, () => {
         // Assert
         expect(laboratory).toBeInstanceOf(Laboratory);
     });
+
+    describe('getQuantity', () => {
+        it('should return quantity of substance', () => {
+            // Arrange
+            const laboratory = new Laboratory("fake-substance-1", "fake-substance-2");
+
+            // Act
+            const result = laboratory.getQuantity('fake-substance-1');
+
+            // Assert
+            expect(result).toEqual(0);
+        });
+    })
 })

@@ -3,4 +3,8 @@ export class Laboratory {
     constructor(...substances: string[]) {
         substances.forEach((substance) => this.substances.set(substance, 0));
     }
+
+    getQuantity(substance: string): number {
+        throw new Error('not implemented.');
+    }
 }
