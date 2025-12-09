@@ -18,7 +18,7 @@ export class Laboratory {
             if (this.substances.has(reactionName)) throw new Error('Laboratory not accept reaction with same name has substances.');
             reaction.forEach(element => {
                 if (
-                    typeof element.quantity !== 'number' || element.quantity <= 0 ||
+                    !Number.isFinite(element.quantity) || element.quantity <= 0 ||
                     typeof element.substance !== 'string'
                 ) throw new Error('Laboratory need valid reactions.');
                 if (!this.substances.has(element.substance)) throw new Error('Laboratory need reactions with valid substance.');
@@ -38,7 +38,7 @@ export class Laboratory {
 
     add(element: string, quantity: number): void {
         if (typeof element !== 'string') throw new Error('Element must be a string.');
-        if (quantity <= 0 || typeof quantity !== 'number') throw new Error('Quantity must be a number and upper than 0');
+        if (quantity <= 0 || !Number.isFinite(quantity)) throw new Error('Quantity must be a number and upper than 0');
         const newQuantity = this.getQuantity(element) + quantity;
         if (this.products.has(element))
             this.products.set(element, newQuantity);
@@ -48,15 +48,46 @@ export class Laboratory {
     make(product: string, desiredQuantity: number): number {
         const reactions = this.reactions[product];
         if (!reactions) throw new Error('The product not exist.');
-        if (typeof desiredQuantity !== 'number' || desiredQuantity <= 0) throw new Error('The desired quantity is invalid.')
+        if (!Number.isFinite(desiredQuantity) || desiredQuantity <= 0)
+            throw new Error('The desired quantity is invalid.');
 
-        reactions.forEach((reaction) => {
-            const quantity = this.getQuantity(reaction.substance);
-            if (this.products.has(reaction.substance))
-                this.products.set(reaction.substance, quantity-reaction.quantity);
-            else this.substances.set(reaction.substance, quantity-reaction.quantity);
-        });
-        this.products.set(product, this.getQuantity(product)+desiredQuantity);
-        return 1;
+        let maxCraftable = desiredQuantity;
+        const usage: { substance: string; perUnit: number; available: number; isProduct: boolean }[] = [];
+
+        for (const reaction of reactions) {
+            const { substance, quantity: perUnit } = reaction;
+
+            const available = this.getQuantity(substance);
+            if (available <= 0) {
+                return 0;
+            }
+
+            const possibleWithThis = Math.floor(available / perUnit);
+            if (possibleWithThis < maxCraftable) {
+                maxCraftable = possibleWithThis;
+                if (maxCraftable === 0) return 0;
+            }
+
+            usage.push({
+                substance,
+                perUnit,
+                available,
+                isProduct: this.products.has(substance),
+            });
+        }
+
+        for (const u of usage) {
+            const remaining = u.available - u.perUnit * maxCraftable;
+            if (u.isProduct) {
+                this.products.set(u.substance, remaining);
+            } else {
+                this.substances.set(u.substance, remaining);
+            }
+        }
+
+        const currentProductQty = this.getQuantity(product);
+        this.products.set(product, currentProductQty + maxCraftable);
+
+        return maxCraftable;
     }
 }
