@@ -67,6 +67,17 @@ describe(Laboratory.name, () => {
             // Assert
             expect(() => new Laboratory(reactions, substance)).toThrow("Laboratory need reactions with valid substance.");
         });
+
+        it('should throw if reaction has same name of substance', () => {
+            // Arrange
+            const substance = "fake-substance-1";
+            const reactions: ReactionsMap = {
+                "fake-substance-1": [{quantity: 1, substance }]
+            }
+
+            // Assert
+            expect(() => new Laboratory(reactions, substance)).toThrow("Laboratory not accept reaction with same name has substances.");
+        });
     })
 
     describe('getQuantity', () => {
