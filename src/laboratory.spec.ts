@@ -196,5 +196,17 @@ describe(Laboratory.name, () => {
             expect(laboratory.getQuantity('fake')).toEqual(1);
             expect(laboratory.getQuantity(substance)).toEqual(0);
         });
+
+        it('should throw if product not exist', () => {
+            // Arrange
+            const substance = 'fake-substance-1';
+            const reactions: ReactionsMap = {
+                fake: [{quantity: 2, substance }],
+            }
+            const laboratory = new Laboratory(reactions, substance);
+
+            // Assert
+            expect(() => laboratory.make('fake-2', 1)).toThrow('The product not exist.');
+        });
     })
 })
