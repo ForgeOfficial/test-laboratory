@@ -57,5 +57,13 @@ describe(Laboratory.name, () => {
             // Assert
             expect(laboratory.getQuantity(substance)).toEqual(quantity);
         });
+
+        it.each(['1', null, undefined, 0, -1])('should throw if quantity is invalid', (quantity) => {
+            // Arrange
+            const substance = 'fake-substance-1';
+
+            // Assert
+            expect(() => laboratory.add(substance, quantity as any)).toThrow('Quantity must be integer and upper than 0');
+        });
     })
 })
