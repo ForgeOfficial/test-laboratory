@@ -39,7 +39,7 @@ describe(Laboratory.name, () => {
         });
 
         it.each([
-            {quantity: 1, substance: 'fake'},
+            {quantity: 1, substance: false },
             {quantity: 1, substance: null },
             {quantity: 1, substance: 1 },
 
