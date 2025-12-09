@@ -26,7 +26,7 @@ describe(Laboratory.name, () => {
 
         it('should throw if substance not exist', () => {
             // Assert
-            expect(() => laboratory.getQuantity('fake-substance-1')).toThrow('Substance not found.');
+            expect(() => laboratory.getQuantity('error-substance')).toThrow('Substance not found.');
         });
     })
 })
