@@ -76,6 +76,8 @@ export class Laboratory {
             });
         }
 
+        if (maxCraftable <= 0) return 0;
+
         for (const u of usage) {
             const remaining = u.available - u.perUnit * maxCraftable;
             if (u.isProduct) {
