@@ -24,7 +24,8 @@ export class Laboratory {
                 if (!this.substances.has(element.substance)) throw new Error('Laboratory need reactions with valid substance.');
             });
             this.products.set(reactionName, 0);
-        })
+        });
+        this.reactions = reactions;
     }
 
     getQuantity(element: string): number {
@@ -42,5 +43,17 @@ export class Laboratory {
         if (this.products.has(element))
             this.products.set(element, newQuantity);
         else this.substances.set(element, newQuantity);
+    }
+
+    make(product: string, desiredQuantity: number): number {
+        const reactions = this.reactions[product];
+        reactions.forEach((reaction) => {
+            const quantity = this.getQuantity(reaction.substance);
+            if (this.products.has(reaction.substance))
+                this.products.set(reaction.substance, quantity-reaction.quantity);
+            else this.substances.set(reaction.substance, quantity-reaction.quantity);
+        });
+        this.products.set(product, this.getQuantity(product)+desiredQuantity);
+        return 1;
     }
 }
