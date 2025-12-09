@@ -79,7 +79,7 @@ describe(Laboratory.name, () => {
             const quantity = 1;
 
             // Assert
-            expect(() => laboratory.add(substance, quantity)).toThrow('The substance must be exist in this laboratory.');
+            expect(() => laboratory.add(substance, quantity)).toThrow('Substance not found.');
         });
     })
 })

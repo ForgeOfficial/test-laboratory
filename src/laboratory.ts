@@ -14,7 +14,6 @@ export class Laboratory {
     add(substance: string, quantity: number): void {
         if (typeof substance !== 'string') throw new Error('Substance must be a string.');
         if (quantity <= 0 || !Number.isInteger(quantity)) throw new Error('Quantity must be integer and upper than 0');
-        if (!this.substances.has(substance)) throw new Error('The substance must be exist in this laboratory.');
         this.substances.set(substance, this.getQuantity(substance)+quantity);
     }
 }
