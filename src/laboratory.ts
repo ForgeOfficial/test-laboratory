@@ -16,7 +16,8 @@ export class Laboratory {
                 if (
                     typeof element.quantity !== 'number' || element.quantity <= 0 ||
                     typeof element.substance !== 'string'
-                ) throw new Error('Laboratory need valid reactions.')
+                ) throw new Error('Laboratory need valid reactions.');
+                if (!this.substances.has(element.substance)) throw new Error('Laboratory need reactions with valid substance.');
             })
         })
     }
