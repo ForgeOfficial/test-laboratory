@@ -130,5 +130,21 @@ describe(Laboratory.name, () => {
             // Assert
             expect(() => laboratory.add(substance, quantity)).toThrow('Substance not found.');
         });
+
+        it('should add quantity to product', () => {
+            // Arrange
+            const reactions = {
+                "fake-product-1": [{quantity: 1, substance: 'fake-substance-1'}],
+            }
+            const product = 'fake-product-1';
+            const quantity = 4;
+            laboratory = new Laboratory(reactions, "fake-substance-1");
+
+            // Act
+            laboratory.add(product, quantity);
+
+            // Assert
+            expect(laboratory.getQuantity(product)).toEqual(quantity);
+        });
     })
 })
