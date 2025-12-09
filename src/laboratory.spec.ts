@@ -46,10 +46,9 @@ describe(Laboratory.name, () => {
             laboratory = new Laboratory("fake-substance-1", "fake-substance-2");
         });
 
-        it('should add quantity to substance', () => {
+        it.each([1, 4])('should add quantity to substance', (quantity) => {
             // Arrange
             const substance = 'fake-substance-1';
-            const quantity = 1;
 
             // Act
             laboratory.add(substance, quantity);
