@@ -2,40 +2,60 @@ import {Laboratory, ReactionsMap} from "./laboratory";
 
 describe(Laboratory.name, () => {
 
-    it('should create laboratory with substances', () => {
-        // Act
-        const laboratory = new Laboratory({}, "fake-substance-1", "fake-substance-2");
+    describe('init', () => {
+        it('should create laboratory with substances', () => {
+            // Act
+            const laboratory = new Laboratory({}, "fake-substance-1", "fake-substance-2");
 
-        // Assert
-        expect(laboratory).toBeInstanceOf(Laboratory);
-    });
+            // Assert
+            expect(laboratory).toBeInstanceOf(Laboratory);
+        });
 
-    it('should create laboratory with substances and reactions', () => {
-        // Arrange
-        const substances = ["fake-substance-1", "fake-substance-2"];
-        const reactions: ReactionsMap = {
-            fake: [
-                {quantity: 1, substance: substances[0] },
-                {quantity: 2, substance: substances[1] },
-            ]
-        };
+        it('should throw if create laboratory without substances', () => {
+            // Assert
+            expect(() => new Laboratory({})).toThrow("Laboratory need substances.");
+        });
 
-        // Act
-        const laboratory = new Laboratory(reactions, ...substances);
+        it('should throw if create laboratory with duplicate substances', () => {
+            // Assert
+            expect(() => new Laboratory({}, "fake", "fake")).toThrow("Laboratory not accept duplicate substances.");
+        });
 
-        // Assert
-        expect(laboratory).toBeInstanceOf(Laboratory);
-    });
+        it('should create laboratory with substances and reactions', () => {
+            // Arrange
+            const substances = ["fake-substance-1", "fake-substance-2"];
+            const reactions: ReactionsMap = {
+                fake: [
+                    {quantity: 1, substance: substances[0] },
+                    {quantity: 2, substance: substances[1] },
+                ]
+            };
 
-    it('should throw if create laboratory without substances', () => {
-        // Assert
-        expect(() => new Laboratory({})).toThrow("Laboratory need substances.");
-    });
+            // Act
+            const laboratory = new Laboratory(reactions, ...substances);
 
-    it('should throw if create laboratory with duplicate substances', () => {
-        // Assert
-        expect(() => new Laboratory({}, "fake", "fake")).toThrow("Laboratory not accept duplicate substances.");
-    });
+            // Assert
+            expect(laboratory).toBeInstanceOf(Laboratory);
+        });
+
+        it.each([
+            {quantity: 1, substance: 'fake'},
+            {quantity: 1, substance: null },
+            {quantity: 1, substance: 1 },
+
+            {quantity: -1, substance: 'fake-substance-1' },
+            {quantity: "1", substance: 'fake-substance-1' },
+            {quantity: false, substance: 'fake-substance-1' },
+        ])('should throw if create laboratory with invalid reactions', (reaction: any) => {
+            // Arrange
+            const reactions: ReactionsMap = {
+                fake: [reaction]
+            }
+
+            // Assert
+            expect(() => new Laboratory(reactions, 'fake-substance-1')).toThrow("Laboratory need valid reactions.");
+        });
+    })
 
     describe('getQuantity', () => {
         let laboratory: Laboratory;
