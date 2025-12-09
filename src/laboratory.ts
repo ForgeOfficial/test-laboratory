@@ -5,6 +5,7 @@ export class Laboratory {
     }
 
     getQuantity(substance: string): number {
+        if (!this.substances.has(substance)) throw new Error('Substance not found.');
         return this.substances.get(substance);
     }
 }
