@@ -11,15 +11,22 @@ describe(Laboratory.name, () => {
     });
 
     describe('getQuantity', () => {
-        it('should return quantity of substance', () => {
-            // Arrange
-            const laboratory = new Laboratory("fake-substance-1", "fake-substance-2");
+        let laboratory: Laboratory;
+        beforeEach(() => {
+            laboratory = new Laboratory("fake-substance-1", "fake-substance-2");
+        });
 
+        it('should return quantity of substance', () => {
             // Act
             const result = laboratory.getQuantity('fake-substance-1');
 
             // Assert
             expect(result).toEqual(0);
+        });
+
+        it('should throw if substance not exist', () => {
+            // Assert
+            expect(() => laboratory.getQuantity('fake-substance-1')).toThrow('Substance not found.');
         });
     })
 })
