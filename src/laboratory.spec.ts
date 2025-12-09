@@ -38,5 +38,24 @@ describe(Laboratory.name, () => {
             // Assert
             expect(() => laboratory.getQuantity('error-substance')).toThrow('Substance not found.');
         });
+    });
+
+    describe('add', () => {
+        let laboratory: Laboratory;
+        beforeEach(() => {
+            laboratory = new Laboratory("fake-substance-1", "fake-substance-2");
+        });
+
+        it('should add quantity to substance', () => {
+            // Arrange
+            const substance = 'fake-substance-1';
+            const quantity = 1;
+
+            // Act
+            laboratory.add(substance, quantity);
+
+            // Assert
+            expect(laboratory.getQuantity(substance)).toEqual(quantity);
+        });
     })
 })
